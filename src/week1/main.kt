@@ -1,4 +1,5 @@
 package week1
+data class FinancialData(val income: Double, val costs: Double, val taxRate: Int)
 class TaxCalculator {
     private fun calculateProceed(income: Double, costs: Double): Double{
         return income - costs
@@ -6,11 +7,9 @@ class TaxCalculator {
     private fun calculateTax(proceed: Double, rate: Int): Double{
         return proceed * (rate.toDouble() / 100)
     }
-    fun calculateNetProceed(income: Double, costs: Double, taxRate: Int): Double{
-        val proceed = calculateProceed(income, costs)
-        println(calculateTax(proceed, taxRate))
-        println(proceed)
-        return proceed - calculateTax(proceed, taxRate)
+    fun calculateNetProceed(data: FinancialData): Double{
+        val proceed = calculateProceed(data.income, data.costs)
+        return proceed - calculateTax(proceed, data.taxRate)
     }
 }
 
@@ -48,6 +47,7 @@ fun main(){
             taxRate = readln().toIntOrNull()?:0
         }while(taxRate < 0.0)
     }
-    println(TaxCalculator().calculateNetProceed(income, costs, taxRate))
+    val financialData1 = FinancialData(income, costs, taxRate)
+    println(TaxCalculator().calculateNetProceed(financialData1))
     FizzBuzz().printFizzBuzz()
 }
