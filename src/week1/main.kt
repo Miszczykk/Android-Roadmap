@@ -1,51 +1,21 @@
 package week1
-
-class Calculator {
-    private var costs: Double = 0.0
-    private var income: Double = 0.0
-    private var taxRate: Int = 0
-    fun readVariables(){
-        print("Enter income: ")
-        income = readln().toDoubleOrNull()?:0.0
-
-        do{
-            print("Enter costs: ")
-            costs = readln().toDoubleOrNull()?:0.0
-        }while(!checkPositiveNumber(costs))
-
-       if(!checkTaxRate(income-costs)){
-           taxRate = 0
-       }else{
-           do{
-               print("Enter tax rate: ")
-               taxRate = readln().toIntOrNull()?:0
-           }while(!checkPositiveNumber(taxRate.toDouble()))
-       }
-        writeProceedsNetto()
-    }
-    private fun checkPositiveNumber(num:Double):Boolean{
-        return num > 0
-    }
-    private fun checkTaxRate(result: Double):Boolean{
-        return result > 0.0
-    }
-    private fun calculateProceeds(income: Double, costs: Double): Double{
+class TaxCalculator {
+    private fun calculateProceed(income: Double, costs: Double): Double{
         return income - costs
     }
-    private fun calculateTax(proceeds: Double, rate: Int): Double{
-        return proceeds * (rate.toDouble()/100)
+    private fun calculateTax(proceed: Double, rate: Int): Double{
+        return proceed * (rate.toDouble() / 100)
     }
-    private fun calculateProceedsNetto(): Double{
-        val proceeds = calculateProceeds(income, costs)
-        return proceeds - calculateTax(proceeds, taxRate)
-    }
-    private fun writeProceedsNetto(){
-        println("Proceeds Netto is: ${calculateProceedsNetto()}")
+    fun calculateNetProceed(income: Double, costs: Double, taxRate: Int): Double{
+        val proceed = calculateProceed(income, costs)
+        println(calculateTax(proceed, taxRate))
+        println(proceed)
+        return proceed - calculateTax(proceed, taxRate)
     }
 }
 
 class FizzBuzz{
-    private fun checkNumber(num: Int): String{
+    private fun convertToString(num: Int): String{
         return when{
             num % 15 == 0 -> "FizzBuzz"
             num % 3 == 0 -> "Fizz"
@@ -53,14 +23,31 @@ class FizzBuzz{
             else -> num.toString()
         }
     }
-    fun isTheNumber(){
+    fun printFizzBuzz(){
         for (i in 1..100){
-            println("$i. ${checkNumber(i)}")
+            println("$i. ${convertToString(i)}")
         }
     }
 }
 
 fun main(){
-    FizzBuzz().isTheNumber()
-    Calculator().readVariables()
+    print("Enter income: ")
+    val income = readln().toDoubleOrNull()?:0.0
+    var costs: Double
+    var taxRate: Int
+    do{
+        print("Enter costs: ")
+        costs = readln().toDoubleOrNull()?:0.0
+    }while(costs < 0.0)
+
+    if(income - costs <= 0.0){
+        taxRate = 0
+    }else{
+        do{
+            print("Enter tax rate: ")
+            taxRate = readln().toIntOrNull()?:0
+        }while(taxRate < 0.0)
+    }
+    println(TaxCalculator().calculateNetProceed(income, costs, taxRate))
+    FizzBuzz().printFizzBuzz()
 }
