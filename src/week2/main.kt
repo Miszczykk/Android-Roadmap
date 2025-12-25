@@ -25,6 +25,7 @@ fun isPalindrome(input: String):Boolean{
 fun main(){
     val accounts: List<BankAccount> = listOf(
         SavingsAccount("OSZCZ-001", 5000.0).withdraw(5000.0),
+        SavingsAccount("OSZCZ-001", 5000.0).deposit(5000.0),
         CheckingAccount("ROR-001", 200.0).withdraw(1200.0),
         SavingsAccount("OSZCZ-002", 10000.0).withdraw(1200.0),
         CheckingAccount("ROR-002", 500.0).withdraw(1200.0)
