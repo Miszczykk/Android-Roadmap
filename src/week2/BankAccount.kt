@@ -5,7 +5,10 @@ abstract class BankAccount(val accountNumber:String, var balance:Double) {
         balance += amount
     }
     open fun withdraw(amount:Double): Boolean{
-        if(amount < balance){
+        if(amount <= 0){
+            return false
+        }
+        if(amount <= balance){
             balance -= amount
             return true
         }

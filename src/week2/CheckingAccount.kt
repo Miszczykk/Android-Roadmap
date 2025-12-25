@@ -2,6 +2,9 @@ package week2
 
 class CheckingAccount(accountNumber: String, balance: Double) : BankAccount(accountNumber, balance) {
     override fun withdraw(amount: Double): Boolean{
+        if(amount <= 0){
+            return false
+        }
         if(balance - amount >= -1000.0){
             balance -= amount
             return true
