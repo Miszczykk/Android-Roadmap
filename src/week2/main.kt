@@ -7,10 +7,10 @@ fun isPalindrome(input: String):Boolean{
     var i = 0
     var j = input.length-1
     while(i < j){
-        while(!input[i].isLetter()){
+        while(!input[i].isLetterOrDigit() && i < j){
             i++
         }
-        while(!input[j].isLetter()){
+        while(!input[j].isLetterOrDigit()  && j > i){
             j--
         }
         if(input[i].lowercaseChar() != input[j].lowercaseChar()){
@@ -23,13 +23,13 @@ fun isPalindrome(input: String):Boolean{
 }
 
 fun main(){
+    val s1 = SavingsAccount("S1", 1000.0)
+    s1.deposit(1000.0)
+    val s2 = CheckingAccount("S2", 2000.0)
+    s2.deposit(1000.0)
     val accounts: List<BankAccount> = listOf(
-        SavingsAccount("OSZCZ-001", 5000.0).withdraw(5000.0),
-        SavingsAccount("OSZCZ-001", 5000.0).deposit(5000.0),
-        CheckingAccount("ROR-001", 200.0).withdraw(1200.0),
-        SavingsAccount("OSZCZ-002", 10000.0).withdraw(1200.0),
-        CheckingAccount("ROR-002", 500.0).withdraw(1200.0)
-    ) as List<BankAccount>
+        s1, s2
+    )
 
     for (account in accounts){
         account.printDetails()
