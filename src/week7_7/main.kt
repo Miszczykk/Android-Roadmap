@@ -36,6 +36,5 @@ fun main(){
         }else{
             nowyPlik.appendText("$zm1 $znak $zm2 = Błąd\n")
         }
-
     }
 }

@@ -2,17 +2,20 @@
 
 `val` - gdy tworzymy stałą, musimy jej nadać wartość początkową, która przez cały okres działania programu nie zmieni swojej wartości
 
-`var` - do zmiennych, która wartość będzie się zmieniać w czasie działania programu
+`var` - do zmiennych, których wartość będzie się zmieniać w czasie działania programu
 
 `print()` - służy do wypisania tekstu
 
 `println()` - to samo co print(), lecz dodaje podział wiersza **\n**
 
+`readln()` - służy do wczytywania tekstu
+
 ```kotlin
-val imie = "Ala"
-println("$imie ma kota.")
+val imie = readln()
+val lat = readln().toIntOrNull() ?: 0
+println("$imie ma kota i ma $lat lat.")
 //druga wersja:
-println(imie + " ma kota.")
+println(imie + " ma kota i ma " + lat + " lat.")
 ```
 
 **Typy zmiennych (podstawowe):**
@@ -124,13 +127,11 @@ for(car in cars){
 }
 ```
 
-
-
 # Tydzień 5
 `for ({pole1} in {pole2} {pole3})` - używamy tej pętli, gdy znamy ilość iteracji.
 
 * `pole1` - inicjalizacja pętli, w tym miejscu tworzymy zmienną, która jest tylko do odczytu **val**
-* `pole2` - warunek pętli. Warunek jest sprawdzany przed uruchomieniem pętli. Jeżeli warunek jest prawdziwa to pętla się uruchomi. Pole to uruchamiane jest na początku każdej pętli. Przykład użycia:
+* `pole2` - warunek pętli. Warunek jest sprawdzany przed uruchomieniem pętli. Jeżeli warunek jest prawdziwy to pętla się uruchomi. Pole to uruchamiane jest na początku każdej pętli. Przykład użycia:
   * `0..5` - zakres w tym przypadku jest <0 ; 5>
   * `0..<5` - zakres w tym przypadku jest <0 ; 5)
   * `0 until 5` - zakres w tym przypadku jest <0 ; 5)
@@ -142,6 +143,26 @@ for(car in cars){
 for(i in 0..10 step 2){
     println(i)
 }
+```
+
+`while(warunek)` - przeważnie używana, gdy nie wiemy ile razy pętla ma się wykonać. Jeżeli warunek jest **true** to pętla się uruchomi.
+
+```kotlin
+var i = 0
+while(i <= 10){
+    println(i)
+    i+=2
+}
+```
+
+`do while` - najpierw wykonuje się się instrukcja w pętli, a na koniec sprawdzany jest warunek.
+
+```kotlin
+var i = 0
+do{
+    println(i)
+    i+=2
+}while(i <= 10)
 ```
 
 # Tydzień 6
@@ -169,6 +190,10 @@ fun main(){
     println(suma)
 }
 ```
+
+**Konwencja pisania nazw funkcji:**
+* Pierwszy znak powinien być pisany małą literą, a kolejne słowa zaczynać się od wielkiej litery (konwencja camelCase)
+* Powinien zaczynać się od czasownika, który wyraża, co robi funkcja
 
 # Tydzień 7
 
@@ -325,7 +350,6 @@ fun main(){
 * Konstruktor podstawowy musi mieć co najmniej jeden argument
 * Wszystkie podstawowe argumenty konstruktora muszą być oznaczone val lub var
 * Klasa danych nie może być abstrakcyjna, otwarta, zapieczętowana ani wewnętrzna
-* Klasa danych może jedynie implementować interfejsy, czyli nie może być dziedziczona, ale sama może dziedziczyć po innych klasach
 
 ```kotlin
 data class Student(val kierunekStudiow: String)
@@ -351,3 +375,35 @@ when(planeta){
     else -> print("Nie znam")
 }
 ```
+
+Aby operować na plikach, należy zaimportować bibliotekę `import java.io.File`
+
+`val zmienna = File("ścieżka_do_pliku")` - ścieżka nie rozpoczyna się od pliku, w którym rozpoczynasz program jak w większości językach programowania, lecz od GŁÓWNEGO FOLDERU PROJEKTU
+
+**Aby odczytać z pliku:**
+```kotlin
+val plik = File("folder/tekst.txt")
+val tekst = plik.readText()
+println(tekst)
+```
+
+**Aby odczytać z pliku linijka po linijce:**
+```kotlin
+val plik = File("folder/tekst.txt")
+plik.forEachLine {linia ->
+    println(linia)
+}
+```
+
+**Aby zapisać do pliku (nadpisuje zawartość):**
+```kotlin
+val plik = File("folder/tekst.txt")
+plik.writeText("Ala ma kota")
+```
+
+**Aby zapisać do pliku (dodaje zawartość na końcu pliku):**
+```kotlin
+val plik = File("folder/tekst.txt")
+plik.appendText("Ala ma kota")
+```
+Podczas zapisu pliku, jeśli plik został nie utworzony, to tworzy ten plik automatycznie
